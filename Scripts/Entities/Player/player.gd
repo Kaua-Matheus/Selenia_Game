@@ -182,10 +182,13 @@ func crouch_state(delta: float):
 	body_hit_box_shape.shape.size = Vector2(20, 20)
 	
 	move_speed = BASE_MOVE_SPEED / 2
+	
 	if stamina < BASE_STAMINA:
 		stamina += delta * 25
 
 	if Input.is_action_just_pressed("Crouch"):
+		body_collision_shape.shape.size = Vector2(20, 28)
+		body_hit_box_shape.shape.size = Vector2(20, 28)
 		move_speed = BASE_MOVE_SPEED
 		body_collision_shape.shape.size = Vector2(20, 28)
 		body_hit_box_shape.shape.size = Vector2(20, 28)
