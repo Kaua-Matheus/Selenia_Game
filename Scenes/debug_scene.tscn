@@ -2,9 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://c0yj1etcbaplx" path="res://Entities/Player/player.tscn" id="1_ciys7"]
 [ext_resource type="PackedScene" uid="uid://cl27np60l3y3" path="res://Interfaces/Hud/player_hud.tscn" id="2_emu5f"]
+[ext_resource type="PackedScene" uid="uid://diowiweglnavx" path="res://Entities/Enemies/enemy.tscn" id="3_emu5f"]
 
 [node name="DebugScene" type="Node2D" unique_id=1373879439]
 
 [node name="Player" parent="." unique_id=510812577 instance=ExtResource("1_ciys7")]
 
 [node name="PlayerHud" parent="." unique_id=84219139 instance=ExtResource("2_emu5f")]
+
+[node name="Enemy" parent="." unique_id=1382775903 instance=ExtResource("3_emu5f")]
+position = Vector2(893, 179)
