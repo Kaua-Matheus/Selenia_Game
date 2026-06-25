@@ -50,7 +50,6 @@ var current_state: PlayerState
 
 # -- Dash --
 var dash_timer: float = DASH_TIMER_BASE
-var dash_direction: Vector2 = Vector2.ZERO
 var dash_speed: int = 700
 
 
@@ -79,6 +78,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	read_input()
 	update_state(delta)
+	update_cooldown(delta)
 	move_and_slide()
 
 
@@ -196,8 +196,8 @@ func crouch_state(delta: float):
 
 func dash_state(delta: float) -> void:
 	move(delta)
-	velocity = dash_direction * dash_speed
-	dash_timer -= delta
+	velocity = mouse_direction * dash_speed
+	dash_timer -= delta * 1
 	
 	if dash_timer <= 0:
 		dash_timer = DASH_TIMER_BASE
@@ -251,7 +251,6 @@ func update_state(delta: float) -> void:
 
 # --- Movement ---
 func move(delta: float):
-	print(is_invincible)
 	velocity = velocity.move_toward(move_direction * ACCELERATION, move_speed * delta)
 
 func read_input() -> void:
@@ -268,6 +267,14 @@ func update_hitbox_offset() -> void:
 	mouse_direction = (mouse_position - global_position).normalized()
 	attack_hit_box.position = mouse_direction * hitbox_offset.x
 	return
+
+func update_cooldown(delta: float) -> void:
+	match current_state:
+		PlayerState.dash:
+			return
+		_:
+			if dash_cooldown > 0:
+				dash_cooldown -= delta * 1
 
 
 # --- Attack ---
