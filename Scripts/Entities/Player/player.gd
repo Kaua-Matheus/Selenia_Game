@@ -3,9 +3,17 @@ extends CharacterBody2D
 
 
 # -- Nodes --
-@onready var attack_hit_box: Area2D = $AttackHitBox
+## -- Animation --
 @onready var attack_animation: AnimatedSprite2D = $AttackHitBox/AttackAnimation
 @onready var player_animation: AnimatedSprite2D = $PlayerAnimation
+
+## -- Body Hitbox --
+@onready var attack_hit_box: Area2D = $AttackHitBox
+
+## -- Body Collision --
+@onready var body_collision_shape: CollisionShape2D = $BodyCollisionShape
+@onready var body_hit_box_shape: CollisionShape2D = $BodyHitBox/BodyHitBoxShape
+
 
 # -- Movement --
 ## -- Direction Vars --
@@ -19,8 +27,9 @@ var hitbox_offset: Vector2
 
 # -- Movement --
 ## --- Move Consts ---
-const BASE_MOVE_SPEED: float = 400
+const BASE_MOVE_SPEED: float = 600
 const BASE_STAMINA: float = 100
+const BASE_MOVE_ACCELERATION: float = 300
 
 ## --- Move Vars ---
 var move_speed: float = BASE_MOVE_SPEED
@@ -119,15 +128,13 @@ func enter_dead_state():
 
 ## --- States ---
 func idle_state(delta: float) -> void:
-	move()
+	move(delta)
 	if stamina < BASE_STAMINA:
 		stamina += delta * 20
 	
 	if Input.is_action_just_pressed("Crouch"):
-		print("Apertado agachar Idle");
 		enter_crouch_state(); return
 	if Input.is_action_just_pressed("Sprint"):
-		print("Correr no Walk");
 		enter_sprint_state(); return
 	if velocity != Vector2.ZERO:
 		enter_walk_state(); return
@@ -137,15 +144,13 @@ func idle_state(delta: float) -> void:
 		enter_attack_state();
 
 func walk_state(delta: float) -> void:
-	move()
+	move(delta)
 	if stamina < BASE_STAMINA:
 		stamina += delta * 20
 	
 	if Input.is_action_just_pressed("Crouch"):
-		print("Apertado agachar Walk");
 		enter_crouch_state(); return
 	if Input.is_action_just_pressed("Sprint"):
-		print("Correr no Walk");
 		enter_sprint_state(); return
 	if velocity == Vector2.ZERO:
 		enter_idle_state(); return
@@ -155,9 +160,10 @@ func walk_state(delta: float) -> void:
 		enter_attack_state();
 
 func sprint_state(delta: float):
-	move()
+	move(delta)
 	move_speed = BASE_MOVE_SPEED * 1.5
 	stamina -= delta * 20
+	
 	if Input.is_action_just_released("Sprint") or stamina <= 0:
 		move_speed = BASE_MOVE_SPEED
 		if velocity == Vector2.ZERO:
@@ -166,12 +172,18 @@ func sprint_state(delta: float):
 			enter_walk_state(); return
 
 func crouch_state(delta: float):
-	move()
+	move(delta)
+	
+	body_collision_shape.shape.size = Vector2(20, 20)
+	body_hit_box_shape.shape.size = Vector2(20, 20)
 	move_speed = BASE_MOVE_SPEED / 2
+	
 	if stamina < BASE_STAMINA:
 		stamina += delta * 25
 
 	if Input.is_action_just_pressed("Crouch"):
+		body_collision_shape.shape.size = Vector2(20, 28)
+		body_hit_box_shape.shape.size = Vector2(20, 28)
 		move_speed = BASE_MOVE_SPEED
 		if velocity == Vector2.ZERO:
 			enter_idle_state(); return
@@ -179,7 +191,7 @@ func crouch_state(delta: float):
 			enter_walk_state(); return
 
 func dash_state(delta: float) -> void:
-	move()
+	move(delta)
 	velocity = dash_direction * dash_speed
 	dash_timer -= delta
 	if dash_timer <= 0:
@@ -190,8 +202,8 @@ func dash_state(delta: float) -> void:
 		else:
 			enter_walk_state(); return
 
-func attack_state() -> void:
-	move()
+func attack_state(delta: float) -> void:
+	move(delta)
 	update_hitbox_offset()
 	if player_animation.animation == "attack" and not player_animation.is_playing():
 		if velocity != Vector2.ZERO:
@@ -199,8 +211,8 @@ func attack_state() -> void:
 		else:
 			enter_idle_state(); return
 
-func attacked_state() -> void:
-	move()
+func attacked_state(delta) -> void:
+	move(delta)
 	pass
 
 func dead_state() -> void:
@@ -217,12 +229,12 @@ func update_state(delta: float) -> void:
 		PlayerState.sprint:  sprint_state(delta);
 		PlayerState.dash:    dash_state(delta);
 		PlayerState.crouch:  crouch_state(delta);
-		PlayerState.attack:  attack_state();
+		PlayerState.attack:  attack_state(delta);
 		PlayerState.dead:    dead_state();
 
 # --- Movement ---
-func move():
-	velocity = move_direction * move_speed
+func move(delta: float):
+	velocity = velocity.move_toward(move_direction * BASE_MOVE_ACCELERATION, move_speed * delta)
 
 func read_input() -> void:
 	update_direction()

@@ -10,7 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://hnnplkvo6nwa" path="res://Sprites/Player/Attack_Sprite/attack_sprite7.png" id="8_xr8lj"]
 [ext_resource type="Texture2D" uid="uid://c75fs0eqdlvut" path="res://Sprites/Player/Attack_Sprite/attack_sprite8.png" id="9_lub02"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cgj2m"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x1y6q"]
+size = Vector2(20, 28)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mv1ah"]
 
@@ -53,14 +54,15 @@ animations = [{
 "speed": 20.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lp751"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lub02"]
+size = Vector2(20, 28)
 
 [node name="Player" type="CharacterBody2D" unique_id=510812577 groups=["Player"]]
 position = Vector2(576, 324)
 script = ExtResource("1_mv1ah")
 
 [node name="BodyCollisionShape" type="CollisionShape2D" parent="." unique_id=129748605]
-shape = SubResource("CapsuleShape2D_cgj2m")
+shape = SubResource("RectangleShape2D_x1y6q")
 
 [node name="PlayerAnimation" type="AnimatedSprite2D" parent="." unique_id=1544047535]
 sprite_frames = SubResource("SpriteFrames_mv1ah")
@@ -73,12 +75,11 @@ shape = SubResource("CircleShape2D_cgj2m")
 
 [node name="AttackAnimation" type="AnimatedSprite2D" parent="AttackHitBox" unique_id=839417192]
 texture_filter = 1
-rotation = 1.5707964
 sprite_frames = SubResource("SpriteFrames_lp751")
 animation = &"aim"
 
 [node name="BodyHitBox" type="Area2D" parent="." unique_id=1678895826]
 
-[node name="BodyHitBox" type="CollisionShape2D" parent="BodyHitBox" unique_id=1129028709]
-shape = SubResource("CapsuleShape2D_lp751")
+[node name="BodyHitBoxShape" type="CollisionShape2D" parent="BodyHitBox" unique_id=1129028709]
+shape = SubResource("RectangleShape2D_lub02")
 debug_color = Color(0.89827734, 0.14828709, 0.6836785, 0.41960785)

@@ -5,8 +5,10 @@ extends CanvasLayer
 var target: Player = null
 
 # --- Nodes ---
-@onready var health_bar: ProgressBar = $Health
-@onready var stamina_bar: ProgressBar = $Stamina
+@onready var health_bar: ProgressBar = $HBoxContainer/Status/HealthBar
+@onready var stamina_bar: ProgressBar = $HBoxContainer/Status/StaminaBar
+@onready var dash_cooldown_bar: ProgressBar = $HBoxContainer/Skills/Dash
+
 
 
 func _ready() -> void:
@@ -16,6 +18,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	health_bar.value = target.health
 	stamina_bar.value = target.stamina
+	dash_cooldown_bar.value = target.dash_cooldown
 
 
 func _resolve_target() -> void:
