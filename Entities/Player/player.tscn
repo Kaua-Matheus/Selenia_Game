@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://c0yj1etcbaplx"]
+
+[ext_resource type="Script" uid="uid://pwinutgivdbc" path="res://Scripts/Entities/Player/player.gd" id="1_mv1ah"]
+[ext_resource type="Texture2D" uid="uid://cv14pgmymyjl4" path="res://Sprites/Player/Attack_Sprite/attack_sprite1.png" id="2_7a1se"]
+[ext_resource type="Texture2D" uid="uid://p672imhf5xit" path="res://Sprites/Player/Attack_Sprite/attack_sprite2.png" id="3_lub02"]
+[ext_resource type="Texture2D" uid="uid://bmr7elp6aon5f" path="res://Sprites/Player/Attack_Sprite/attack_sprite3.png" id="4_x1y6q"]
+[ext_resource type="Texture2D" uid="uid://diwpit2lcea4k" path="res://Sprites/Player/Attack_Sprite/attack_sprite4.png" id="5_ap3xn"]
+[ext_resource type="Texture2D" uid="uid://djeecnauibe5i" path="res://Sprites/Player/Attack_Sprite/attack_sprite5.png" id="6_iplt1"]
+[ext_resource type="Texture2D" uid="uid://bbk20ioxkrrfh" path="res://Sprites/Player/Attack_Sprite/attack_sprite6.png" id="7_owvpp"]
+[ext_resource type="Texture2D" uid="uid://hnnplkvo6nwa" path="res://Sprites/Player/Attack_Sprite/attack_sprite7.png" id="8_xr8lj"]
+[ext_resource type="Texture2D" uid="uid://c75fs0eqdlvut" path="res://Sprites/Player/Attack_Sprite/attack_sprite8.png" id="9_lub02"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cgj2m"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mv1ah"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cgj2m"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lp751"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7a1se")
+}],
+"loop": 0,
+"name": &"aim",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_lub02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_x1y6q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ap3xn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_iplt1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_owvpp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_xr8lj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_lub02")
+}],
+"loop": 0,
+"name": &"attack",
+"speed": 20.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lp751"]
+
+[node name="Player" type="CharacterBody2D" unique_id=510812577 groups=["Player"]]
+position = Vector2(576, 324)
+script = ExtResource("1_mv1ah")
+
+[node name="BodyCollisionShape" type="CollisionShape2D" parent="." unique_id=129748605]
+shape = SubResource("CapsuleShape2D_cgj2m")
+
+[node name="PlayerAnimation" type="AnimatedSprite2D" parent="." unique_id=1544047535]
+sprite_frames = SubResource("SpriteFrames_mv1ah")
+
+[node name="AttackHitBox" type="Area2D" parent="." unique_id=336213249]
+position = Vector2(32, 0)
+
+[node name="AttackCollisionShape" type="CollisionShape2D" parent="AttackHitBox" unique_id=1075856841]
+shape = SubResource("CircleShape2D_cgj2m")
+
+[node name="AttackAnimation" type="AnimatedSprite2D" parent="AttackHitBox" unique_id=839417192]
+texture_filter = 1
+rotation = 1.5707964
+sprite_frames = SubResource("SpriteFrames_lp751")
+animation = &"aim"
+
+[node name="BodyHitBox" type="Area2D" parent="." unique_id=1678895826]
+
+[node name="BodyHitBox" type="CollisionShape2D" parent="BodyHitBox" unique_id=1129028709]
+shape = SubResource("CapsuleShape2D_lp751")
+debug_color = Color(0.89827734, 0.14828709, 0.6836785, 0.41960785)

@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cl27np60l3y3"]
+
+[ext_resource type="Script" uid="uid://bvwqkghroakmk" path="res://Scripts/Interface/Hud/player_hud.gd" id="1_cy5ib"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cgj2m"]
+bg_color = Color(0.1442247, 0.026220297, 0.15093148, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lp751"]
+bg_color = Color(0.45490196, 0.6039216, 0.24705882, 1)
+
+[node name="PlayerHud" type="CanvasLayer" unique_id=84219139]
+script = ExtResource("1_cy5ib")
+
+[node name="Health" type="ProgressBar" parent="." unique_id=630580119]
+offset_right = 286.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_cgj2m")
+theme_override_styles/fill = SubResource("StyleBoxFlat_lp751")
+
+[node name="Stamina" type="ProgressBar" parent="." unique_id=426707267]
+offset_top = 31.0
+offset_right = 286.0
+offset_bottom = 58.0
+theme_override_styles/background = SubResource("StyleBoxFlat_cgj2m")
+theme_override_styles/fill = SubResource("StyleBoxFlat_lp751")
