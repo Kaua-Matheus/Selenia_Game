@@ -1,6 +1,9 @@
 class_name Player
 extends CharacterBody2D
 
+# -- Externals --
+const GAME_OVER_SCENE: String = "res://Scenes/debug_scene.tscn"
+
 
 # -- Nodes --
 ## --- Animation ---
@@ -112,7 +115,7 @@ func enter_crouch_state():
 
 func enter_attack_state():
 	current_state = PlayerState.attack
-	attack_hit_box.monitoring = false
+	attack_hit_box.monitoring = true
 	switch_animation_attack()
 
 func enter_attacked_state():
@@ -236,8 +239,7 @@ func attacked_state(delta: float, amount: float) -> void:
 
 func dead_state() -> void:
 	if player_animation.animation == "death" and not player_animation.is_playing():
-		#get_tree().change_scene_to_file.call_deferred(GAME_OVER_SCENE)
-		pass
+		get_tree().change_scene_to_file.call_deferred(GAME_OVER_SCENE)
 
 
 ## --- Update State Machine ---
