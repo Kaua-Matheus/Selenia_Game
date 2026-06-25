@@ -10,7 +10,6 @@ var target: Player = null
 @onready var dash_cooldown_bar: ProgressBar = $HBoxContainer/Skills/Dash
 
 
-
 func _ready() -> void:
 	_resolve_target()
 

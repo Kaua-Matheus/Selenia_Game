@@ -88,28 +88,22 @@ size_flags_vertical = 4
 [node name="Dash" type="ProgressBar" parent="HBoxContainer/Skills" unique_id=725345325]
 custom_minimum_size = Vector2(300, 15)
 custom_maximum_size = Vector2(300, 20)
-clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_cgj2m")
 theme_override_styles/fill = SubResource("StyleBoxFlat_lp751")
-max_value = 5.0
-fill_mode = 3
-show_percentage = false
+max_value = 3.0
+value = 3.0
 
 [node name="DashLabel" type="Label" parent="HBoxContainer/Skills/Dash" unique_id=1287660377]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 4
 anchor_top = 0.5
-anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
 offset_top = -11.5
-offset_right = 20.0
+offset_right = 40.0
 offset_bottom = 11.5
-grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.48962224, 0.48962224, 0.48962218, 1)
 theme_override_font_sizes/font_size = 12
